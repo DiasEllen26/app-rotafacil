@@ -3,7 +3,6 @@ package br.com.alfaumuarama.rotafacil;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +24,19 @@ public class LoginActivity extends AppCompatActivity {
         edtSenha = findViewById(R.id.edtSenha);
         btnLogin = findViewById(R.id.btnLogin);
 
+        Intent dadosRecebido = getIntent();
+
+        if (caminhoRecebido != null) {
+
+            Bundle params = caminhoRecebido.getExtras();
+
+            if (params != null) {
+                // idAluno = params.getInt("Id");
+                edtEmail.setText(params.getString("Email"));
+                edtSenha.setText(params.getString("Senha"));
+
+                //direcionar para a tela principal
+            }
+        }
 
     }
-}
