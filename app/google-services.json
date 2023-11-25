@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "538763090457",
+    "project_id": "rotafacil-service",
+    "storage_bucket": "rotafacil-service.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538763090457:android:b5dd192819250394072888",
+        "android_client_info": {
+          "package_name": "br.com.alfaumuarama.rotafacil"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7oznArYXcnSmUOWAdHq8GSHlroQ4VAY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
