@@ -3,6 +3,7 @@ package br.com.alfaumuarama.rotafacil;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +18,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import br.com.alfaumuarama.rotafacil.datasource.TbUsuario;
 import br.com.alfaumuarama.rotafacil.models.Usuario;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends AppCompatActivity {
 
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -29,21 +31,20 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db.collection("usuario")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("Usuarios", document.getId() + " => " + document.getData());;
-                            }
-                        }else {
-                            Log.w("Eror","Error getting documents.", task.getException());
-                        }
-                    }
-                });
+        if(!usuarioEstaLogado()){
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }
 
     }
-    };
+
+    private boolean usuarioEstaLogado(){
+        TbUsuario tbUsuario = new TbUsuario(MainActivity.this);
+
+        Usuario usuario = tbUsuario.buscarLocal();
+
+        if(usuario.id == null) return false;
+
+        return true;
+    }
+};
 

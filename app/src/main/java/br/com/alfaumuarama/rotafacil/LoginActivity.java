@@ -1,5 +1,6 @@
 package br.com.alfaumuarama.rotafacil;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,9 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import br.com.alfaumuarama.rotafacil.datasource.TbUsuario;
+import br.com.alfaumuarama.rotafacil.models.Usuario;
+
 public class LoginActivity extends AppCompatActivity {
 
-    EditText edtEmail, edtSenha;
+    EditText edtLogin, edtSenha;
     Button btnLogin;
 
     @Override
@@ -18,29 +22,44 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        edtEmail = findViewById(R.id.edtEmail);
+        edtLogin = findViewById(R.id.edtEmail);
         edtSenha = findViewById(R.id.edtSenha);
         btnLogin = findViewById(R.id.btnLogin);
-
-        Intent dadosRecebido = getIntent();
-
-        if (dadosRecebido != null) {
-
-            Bundle params = dadosRecebido.getExtras();
-
-            if (params != null) {
-
-                edtEmail.setText(params.getString("Email"));
-                edtSenha.setText(params.getString("Senha"));
-
-            }
-        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //validar o login
+                efetuarLogin(edtLogin.getText().toString(), edtSenha.getText().toString());
             }
         });
+    }
+
+    private void efetuarLogin(String login, String senha){
+        TbUsuario tbUsuario = new TbUsuario(LoginActivity.this);
+
+
+        tbUsuario.login(login, senha, new TbUsuario.LoginCallback() {
+            @Override
+            public void onSuccess(Usuario usuario) {
+                tbUsuario.salvarLocal(usuario);
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                ShowMensagem(e.getMessage());
+            }
+        });
+
+
+
+    }
+
+    private void ShowMensagem(String texto) {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(LoginActivity.this);
+        alerta.setTitle("Atenção"); //Adicionando o titulo da mensagem
+        alerta.setMessage(texto); //Adicionando o texto da mensagem
+        alerta.setNeutralButton("OK", null); //Adicionando botao de OK
+        alerta.show(); //Exibindo a mensagem na tela
     }
 }
