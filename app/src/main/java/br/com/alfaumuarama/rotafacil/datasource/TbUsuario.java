@@ -146,7 +146,7 @@ public class TbUsuario {
         void onCadastroFalha(String mensagemErro);
     }
 
-    private void cadastrar(Usuario usuario, CadastroListener listener){
+    public void cadastrar(Usuario usuario, CadastroListener listener){
         boolean status = false;
         db.collection("usuario").add(usuario).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -165,7 +165,7 @@ public class TbUsuario {
     }
 
 
-    private static String calcularHashSHA256(String input) {
+    public static String calcularHashSHA256(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = md.digest(input.getBytes());

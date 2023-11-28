@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import br.com.alfaumuarama.rotafacil.datasource.TbUsuario;
 import br.com.alfaumuarama.rotafacil.models.Usuario;
@@ -15,6 +16,7 @@ import br.com.alfaumuarama.rotafacil.models.Usuario;
 public class LoginActivity extends AppCompatActivity {
 
     EditText edtLogin, edtSenha;
+    TextView  edtCadastroLogin;
     Button btnLogin;
 
     @Override
@@ -25,13 +27,22 @@ public class LoginActivity extends AppCompatActivity {
         edtLogin = findViewById(R.id.edtEmail);
         edtSenha = findViewById(R.id.edtSenha);
         btnLogin = findViewById(R.id.btnLogin);
-
+        edtCadastroLogin = findViewById(R.id.edtCadastroLink);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 efetuarLogin(edtLogin.getText().toString(), edtSenha.getText().toString());
             }
         });
+
+        edtCadastroLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent tela = new Intent(LoginActivity.this, CadastroActivity.class);
+                startActivity(tela);
+            }
+        });
+
     }
 
     private void efetuarLogin(String login, String senha){
