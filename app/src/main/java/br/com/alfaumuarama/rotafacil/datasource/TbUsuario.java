@@ -27,6 +27,7 @@ public class TbUsuario {
 
     FirebaseFirestore db;
 
+
     public  TbUsuario(Context context){
         BancoDados.getInstance().abrirBanco(context);
         String sql = "CREATE TABLE IF NOT EXISTS usuario (" +
